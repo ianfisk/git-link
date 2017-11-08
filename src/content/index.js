@@ -1,11 +1,11 @@
 import UrlPattern from 'url-pattern';
+import config from '../config';
 import { get, set } from '../helpers/storage-helpers';
 import { GitClient, NpmClient } from '../clients';
 
 const packageJsonPattern = new UrlPattern('*/:owner/:repo/blob/:ref/package.json*');
 const gitClient = new GitClient();
 
-const npmPackageUrl = 'https://www.npmjs.com/package';
 const npmClient = new NpmClient();
 
 const [packageJsonElement] = document.getElementsByClassName('js-file-line-container');
@@ -81,7 +81,7 @@ async function linkifyDependencies(packageJsonContents, packageJsonContainer) {
 			if (packageName && allDependencies[packageName]) {
 				const { name, homepage } = await getNpmPackageInfo(packageName);
 
-				const anchor = createAnchor(homepage || `${npmPackageUrl}/${name}`);
+				const anchor = createAnchor(homepage || `${config.npmPackagePageUrlBase}/${name}`);
 				anchor.appendChild(packageNameSpan.cloneNode(true));
 				packageNameSpan.replaceWith(anchor);
 			}
