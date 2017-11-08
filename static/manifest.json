@@ -3,10 +3,12 @@
 	"name": "Git Link",
 	"version": "0.1.0",
 	"description": "Click on npm packages in package.json to go straight to the package's git repo.",
-	"background": {
-		"persistent": false,
-		"scripts": ["bg.js"]
-	},
+	"content_scripts": [
+		{
+			"matches": ["https://github.com/*/package.json"],
+			"js": ["content.js"]
+		}
+	],
 	"page_action": {
 		"default_title": "Git Link"
 	},

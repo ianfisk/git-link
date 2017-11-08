@@ -18,7 +18,6 @@ if (isProduction) {
 
 module.exports = {
 	entry: {
-		bg: path.resolve(__dirname, 'src/background/index.js'),
 		content: path.resolve(__dirname, 'src/content/index.js'),
 	},
 
