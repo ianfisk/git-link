@@ -1,0 +1,20 @@
+{
+	"manifest_version": 2,
+	"name": "Git Link",
+	"version": "0.1.0",
+	"description": "Click on npm packages in package.json to go straight to the package's git repo.",
+	"background": {
+		"persistent": false,
+		"scripts": ["bg.js"]
+	},
+	"page_action": {
+		"default_title": "Git Link"
+	},
+	"permissions": [
+		"https://github.com/*",
+		"https://registry.npmjs.org/*",
+		"tabs",
+		"declarativeContent",
+		"storage"
+	]
+}

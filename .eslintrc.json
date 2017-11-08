@@ -1,12 +1,23 @@
 {
 	"extends": "airbnb-base",
+	"plugins": [
+		"prettier"
+	],
 	"env": {
-		"browser": true
+		"browser": true,
+		"webextensions": true
 	},
 	"rules": {
+		"prettier/prettier": "error",
 		"indent": ["error", "tab"],
 		"no-tabs": "off",
 		"comma-dangle": "off",
-		"function-paren-newline": "off"
+		"function-paren-newline": "off",
+		"import/prefer-default-export": "off",
+		"object-curly-newline": "off",
+		"no-use-before-define": "off",
+		"arrow-parens": "off",
+		"no-plusplus": "off",
+		"no-await-in-loop": "off"
 	}
 }
