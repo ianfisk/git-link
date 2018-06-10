@@ -16,7 +16,6 @@
 		"https://github.com/*",
 		"https://registry.npmjs.org/*",
 		"tabs",
-		"declarativeContent",
-		"storage"
+		"declarativeContent"
 	]
 }

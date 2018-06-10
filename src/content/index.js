@@ -1,6 +1,5 @@
 import UrlPattern from 'url-pattern';
 import config from '../config';
-import { get, set } from '../helpers/storage-helpers';
 import { GitClient, NpmClient } from '../clients';
 
 const packageJsonPattern = new UrlPattern('*/:owner/:repo/blob/:ref/package.json*');
@@ -33,11 +32,6 @@ async function processPackageJson(packageJsonContainer) {
 
 async function getPackageJsonContents(packageJsonContainer) {
 	const match = packageJsonPattern.match(window.location.href);
-	const packageJsonKey = getPackageJsonStorageKey(match);
-	const savedContent = await get(packageJsonKey);
-	if (savedContent) {
-		return savedContent;
-	}
 
 	let packageJsonContents;
 	try {
@@ -49,7 +43,6 @@ async function getPackageJsonContents(packageJsonContainer) {
 		}
 	}
 
-	set({ [packageJsonKey]: packageJsonContents });
 	return packageJsonContents;
 }
 
@@ -57,10 +50,6 @@ async function getPackageJsonContentsFromGitApi(urlMatch) {
 	const packageJson = await gitClient.getContents({ ...urlMatch, path: 'package.json' });
 	const packageJsonContents = JSON.parse(atob(packageJson.content));
 	return packageJsonContents;
-}
-
-function getPackageJsonStorageKey({ owner, repo, ref }) {
-	return `${owner}-${repo}-${ref}`;
 }
 
 async function linkifyDependencies(packageJsonContents, packageJsonContainer) {
@@ -79,7 +68,7 @@ async function linkifyDependencies(packageJsonContents, packageJsonContainer) {
 
 			const packageName = packageNameSpan && packageNameSpan.textContent.replace(/"/g, '');
 			if (packageName && allDependencies[packageName]) {
-				const { name, homepage } = await getNpmPackageInfo(packageName);
+				const { name, homepage } = await npmClient.getMinimalPackageInformation(packageName);
 
 				const anchor = createAnchor(homepage || `${config.npmPackagePageUrlBase}/${name}`);
 				anchor.appendChild(packageNameSpan.cloneNode(true));
@@ -87,21 +76,6 @@ async function linkifyDependencies(packageJsonContents, packageJsonContainer) {
 			}
 		}
 	}
-}
-
-async function getNpmPackageInfo(packageName) {
-	const savedPackageInfo = await get(packageName);
-	if (savedPackageInfo) {
-		return savedPackageInfo;
-	}
-
-	const { name, homepage, repository } = await npmClient.getMinimalPackageInformation(packageName);
-	const minimalPackageInfo = { name, homepage, repository };
-	if (name && homepage && repository) {
-		set({ [packageName]: minimalPackageInfo });
-	}
-
-	return minimalPackageInfo;
 }
 
 function createAnchor(href) {
