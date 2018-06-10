@@ -1,7 +1,14 @@
 {
 	"extends": "airbnb-base",
+	"parser": "babel-eslint",
+	"parserOptions": {
+		"ecmaFeatures": {
+			"experimentalObjectRestSpread": true
+		}
+	},
 	"plugins": [
-		"prettier"
+		"prettier",
+		"prefer-object-spread"
 	],
 	"env": {
 		"browser": true,
@@ -9,15 +16,31 @@
 	},
 	"rules": {
 		"prettier/prettier": "error",
-		"indent": ["error", "tab"],
-		"no-tabs": "off",
-		"comma-dangle": "off",
-		"function-paren-newline": "off",
-		"import/prefer-default-export": "off",
-		"object-curly-newline": "off",
-		"no-use-before-define": "off",
-		"arrow-parens": "off",
-		"no-plusplus": "off",
-		"no-await-in-loop": "off"
+		"indent": 0,
+		"no-tabs": 0,
+		"no-param-reassign": 0,
+		"no-use-before-define": 0,
+		"guard-for-in": 0,
+		"id-length": 0,
+		"max-len": 0,
+		"new-cap": 0,
+		"quote-props": [2, "consistent"],
+		"array-bracket-spacing": [2, "always", {
+			"singleValue": false,
+			"objectsInArrays": false,
+			"arraysInArrays": false
+		}],
+		"object-curly-spacing": [2, "always", {
+			"objectsInObjects": false,
+			"arraysInObjects": true
+		}],
+		"prefer-object-spread/prefer-object-spread": 2,
+		"comma-dangle": [2, "always-multiline"],
+		"function-paren-newline": 0,
+		"import/prefer-default-export": 0,
+		"object-curly-newline": 0,
+		"arrow-parens": 0,
+		"no-plusplus": 0,
+		"no-await-in-loop": 0
 	}
 }
