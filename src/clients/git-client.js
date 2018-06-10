@@ -7,6 +7,10 @@ export class GitClient {
 	}
 
 	async getContents({ owner, repo, path, ref }) {
-		return fetchJson(`${this.baseUrl}/repos/${owner}/${repo}/contents/${path}?ref=${ref}`);
+		return fetchJson(`${this.baseUrl}/repos/${owner}/${repo}/contents/${path}`, {
+			query: {
+				ref,
+			},
+		});
 	}
 }

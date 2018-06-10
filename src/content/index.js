@@ -4,8 +4,8 @@ import { get, set } from '../helpers/storage-helpers';
 import { GitClient, NpmClient } from '../clients';
 
 const packageJsonPattern = new UrlPattern('*/:owner/:repo/blob/:ref/package.json*');
-const gitClient = new GitClient();
 
+const gitClient = new GitClient();
 const npmClient = new NpmClient();
 
 const [packageJsonElement] = document.getElementsByClassName('js-file-line-container');
