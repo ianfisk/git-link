@@ -39,16 +39,10 @@ async function getPackageJsonContents(packageJsonContainer) {
 	} catch (e) {
 		// try to get the contents from Github's API
 		if (match) {
-			packageJsonContents = await getPackageJsonContentsFromGitApi(match);
+			packageJsonContents = await gitClient.getFileContents({ ...match, path: 'package.json' });
 		}
 	}
 
-	return packageJsonContents;
-}
-
-async function getPackageJsonContentsFromGitApi(urlMatch) {
-	const packageJson = await gitClient.getContents({ ...urlMatch, path: 'package.json' });
-	const packageJsonContents = JSON.parse(atob(packageJson.content));
 	return packageJsonContents;
 }
 
